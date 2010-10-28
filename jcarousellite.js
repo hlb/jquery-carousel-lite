@@ -31,7 +31,7 @@ $.fn.jCarouselLite = function(options) {
         animCss=o.vertical?"top":"left",
         sizeCss=o.vertical?"height":"width";
 
-    var div = $(this), ul = div.find('ul'), tLi = ul.children('li'), tl = tLi.length, v = o.visible;
+    var div = $(this), ul = $('>ul', div), tLi = $('>li', ul), tl = tLi.length, v = o.visible;
     o.start = Math.min(o.start, tLi.length-1);
     
     if (o.circular) {
@@ -40,7 +40,7 @@ $.fn.jCarouselLite = function(options) {
         o.start += v;
     }
 
-    var li = ul.children('li'), itemLength = li.length, curr = o.start;
+    var li = $('>li', ul), itemLength = li.length, curr = o.start;
     div.css("visibility", "visible");
 
     li.css({overflow: o.vertical ? "hidden" : 'visible', 'float': o.vertical ? "none" : "left"});
@@ -171,6 +171,18 @@ $.fn.jCarouselLite = function(options) {
           running = false;
         });
 
+        if(o.btnGo) { // add .cur class to current button
+            $(o.btnGo).removeClass('cur');
+            var n = 1;
+            if (to < 1) {
+                n = to + tl;
+            } else if (to > tl) {
+                n = to - tl;
+            } else {
+                n = to;
+            }
+            $(o.btnGo[n-1]).addClass('cur');
+        }
       }
       return false;
     } // end if !running
