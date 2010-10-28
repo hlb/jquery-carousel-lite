@@ -155,7 +155,7 @@ $.fn.jCarouselLite = function(options) {
 
           if (to<0) {
             curr = 0;
-          } else if  (to>itemLength-v) {
+          } else if (o.allowEmpty ? to>=itemLength : to>itemLength-v) {
             curr = itemLength-v;
           } else {
             curr = to;
@@ -208,6 +208,7 @@ $.fn.jCarouselLite.defaults = {
   start: 0, // index of item to show initially in the first posiition
   scroll: 1, // number of items to scroll at a time
 
+  allowEmpty: false, // obey scroll instead of visible
   beforeStart: null,
   afterEnd: null
 };
